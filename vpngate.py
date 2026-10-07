@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""
+"" "" ""
 VPN Gate SSTP 节点检测流水线 (精简版)
-=====================================
-流程:
+  5. 生成 public/data.json + public/index.html + public/nodes.txt
+"" "" ""
   1. 获取 VPN Gate 原始节点
   2. 只保留带 TCP 入口的 SSTP 节点
   3. 去重
@@ -10,30 +10,30 @@ VPN Gate SSTP 节点检测流水线 (精简版)
   5. 生成 public/data.json + public/index.html + public/nodes.txt
 """
 
-import base64
-import csv
-import io
-import json
-import os
-import re
-import sys
-import time
-from concurrent.futures import ThreadPoolExecutor, as_completed
-from datetime import datetime, timezone
-from urllib.parse import quote
+导入 base64 base64
+导入 csv csv
+导入 io io
+导入 json json
+导入 os os
+导入 re re
+导入 sys sys
+导入时间 time
+from concurrent.futures import ThreadPoolExecutor, as_completed concurrent.futures import ThreadPoolExecutor, as_completed
+from datetime import datetime, timezone datetime import datetime, timezone
+从 urllib.parse 导入 quote urllib.parse import quote
 
-import requests
+导入 requests requests
 
-for _stream in (sys.stdout, sys.stderr):
-    try:
-        _stream.reconfigure(encoding="utf-8", errors="replace")
-    except Exception:
-        pass
+对于 _stream 在 (sys.stdout, sys.stderr) 中： _stream in (sys.stdout, sys.stderr):
+    try:try:
+        _stream.reconfigure(encoding="utf-8", errors="replace")reconfigure(encoding="utf-8", errors="replace")
+    except Exception:except Exception:
+        通过pass
 
 # ---------------------------------------------------------------------------
 # 配置
 # ---------------------------------------------------------------------------
-REPO_DIR = os.path.dirname(os.path.abspath(__file__))
+REPO_DIR = os.path.dirname(os.path.abspath(__file__))path.dirname(os.path.abspath(__file__))
 
 VPNGATE_API = os.environ.get("VPNGATE_API", "http://www.vpngate.net/api/iphone/")
 VPNGATE_MIRROR = os.environ.get(
@@ -304,7 +304,7 @@ EDGE_HOSTS = [
     if h.strip()
 ]
 
-NODES_URL = os.environ.get("NODES_URL", "https://YOUR_GITHUB_USERNAME.github.io/gate/nodes.txt")
+NODES_URL = os.environ.get("NODES_URL", "https://guihuaxiang1-cmd.github.io/gate/nodes.txt")
 
 def build_nodes_text(data):
     """生成纯节点行版本 (无注释): 每行 = 入口地址#名字$sstp://..."""
